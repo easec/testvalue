@@ -25,7 +25,7 @@ pool:
   name: easec-pool
   
 variables:
-- group: variableGroup
+- group: variable_iScaleArchive
 
 stages:
 - stage: check_container_exist
