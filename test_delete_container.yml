@@ -1,9 +1,21 @@
-# This pipeline will delete all resources in Resource Group defined in the variable resourceGroupName.
-
+# This pipeline will:
+# - Check if container already exists, if not it will create it.
+# 
 #
-
-
-# This pipeline also expects an Azure (Resource Manager) service connection in Azure DevOps with the name 'AzureServiceConnection'.
+# The following variables need to be provided to the pipeline:
+#
+# - subscriptionId           : Subscription Id.
+# - storage-account          : Name for Storage account.
+# - source-container         : Name for source container.
+# - source-blob-os           : Name for source blob containing OS.
+# - source-blob-data         : Name for source blob containing data.
+# - dest-container           : Name for destination container.
+# - dest-blob-os             : Name for destination blob containing OS.
+# - dest-blob-data           : Name for destination blob containing data.
+#
+# Pipeline are used with User assigned managed identity
+#
+# This pipeline also expects an Azure (Resource Manager) service connection in Azure DevOps with the name 'connection_snapshottestsa', using Workload Identity federation (manual). This service connection must have been set up in the Project Settings.
 
 
 trigger: none
@@ -15,6 +27,7 @@ pool:
 variables:
 - group: variable_iScaleArchive
 
+stages:
 - stage: Delete_blobs_and_container
   jobs:
   - job:
